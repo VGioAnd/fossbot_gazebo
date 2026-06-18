@@ -1,0 +1,573 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+    <model name="fossbot">
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <link name="base_footprint"/>
+
+        <!-- BASE -->
+        <link name="base_link">
+		
+            <inertial>
+                <pose>-0.032 0 0.070 0 0 0</pose>
+                <inertia>
+                    <ixx>7.2397393e-01</ixx>
+                    <ixy>4.686399e-10</ixy>
+                    <ixz>-1.09525703e-08</ixz>
+                    <iyy>7.2397393e-01</iyy>
+                    <iyz>2.8582649e-09</iyz>
+                    <izz>6.53050163e-01</izz>
+                </inertia>
+                <mass>8.2573504e-01</mass>
+            </inertial>
+
+            <collision name="base_collision">
+                <pose>-0.032 0 0.070 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>0.078 0.16 0.15</size>
+                    </box>
+                </geometry>
+            </collision>
+
+            <visual name="base_visual">
+                <pose>-0.032 0 0 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>meshes/robot_base.stl</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+                <material>
+                    <ambient>0.1 0.1 0.9 1.0</ambient>
+                    <diffuse>0.1 0.1 0.9 1.0</diffuse>
+                    <specular>0.1 0.1 0.8 1.0</specular>
+                </material>
+            </visual>
+			
+        </link>
+
+
+
+        <!-- IMU -->
+		
+        <link name="imu">
+            <pose>-0.05 0 0.05 0 0 0</pose>
+            <visual name="imu_visual">
+                <geometry>
+                    <box>
+                        <size>0.01 0.01 0.01</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1.0 0.8 0.0 1.0</ambient>
+                    <diffuse>1.0 0.8 0.0 1.0</diffuse>
+                    <specular>0.1 0.1 0.1 1.0</specular>
+                </material>
+            </visual>
+
+            <sensor name="imu" type="imu">
+                <always_on>true</always_on>
+                <update_rate>200</update_rate>
+                <topic>imu</topic>
+                <imu>
+                    <angular_velocity>
+                        <x>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>2e-4</stddev>
+                            </noise>
+                        </x>
+                        <y>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>2e-4</stddev>
+                            </noise>
+                        </y>
+                        <z>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>2e-4</stddev>
+                            </noise>
+                        </z>
+                    </angular_velocity>
+                    <linear_acceleration>
+                        <x>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>1.7e-2</stddev>
+                            </noise>
+                        </x>
+                        <y>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>1.7e-2</stddev>
+                            </noise>
+                        </y>
+                        <z>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>1.7e-2</stddev>
+                            </noise>
+                        </z>
+                    </linear_acceleration>
+                </imu>
+            </sensor>
+        </link>
+
+
+
+        <!-- LIDAR -->
+		
+        <link name="lidar">
+		
+            <pose>-0.04 0 0.105 0 0 0 </pose>
+
+            <collision name="lidar_collision">
+                <pose>-0.020 0 0.161 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.0508</radius>
+                        <length>0.055</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name="lidar_visual">
+                <pose>0 0 0 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>meshes/VLP16_scan.dae</uri>
+                        <scale>0.4 0.4 0.4</scale>
+                    </mesh>
+                </geometry>
+            </visual>
+
+            <visual name="lidar_top_visual">
+                <pose>0 0 0 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>meshes/VLP16_base_2.dae</uri>
+                        <scale>0.4 0.4 0.4</scale>
+                    </mesh>
+                </geometry>
+            </visual>
+
+            <visual name="lidar_bottom_visual">
+                <pose>0 0 0 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>meshes/VLP16_base_1.dae</uri>
+                        <scale>0.4 0.4 0.4</scale>
+                    </mesh>
+                </geometry>
+            </visual>
+
+            <sensor name="scan_omni" type="gpu_lidar">
+                <pose>0 0 0.3 0 0 0 </pose>
+                <update_rate>10</update_rate>
+                <topic>scan</topic>
+                <lidar>
+                    <scan>
+                        <horizontal>
+                            <samples>360</samples>
+                            <resolution>1</resolution>
+                            <min_angle>-3.14159</min_angle>
+                            <max_angle>3.14159</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>0.12</min>
+                        <max>12.0</max>
+                        <resolution>0.01</resolution>
+                    </range>
+                </lidar>
+            </sensor>
+			
+        </link>
+		
+	
+
+
+        <!-- Ultrasonic Sensor -->
+		
+        <link name="ultrasonic">
+            <pose>0.018 0 0.02 0 0 0</pose>
+			
+            <!-- <visual name="ultrasonic_visual"> -->
+                <!-- <geometry> -->
+                    <!-- <box> -->
+                        <!-- <size>0.01 0.01 0.01</size> -->
+                    <!-- </box> -->
+                <!-- </geometry> -->
+                <!-- <material> -->
+                    <!-- <ambient>0.1 0.8 0.0 1</ambient> -->
+                    <!-- <diffuse>0.1 0.8 0.0 1</diffuse> -->
+                    <!-- <specular>0.9 0.9 0.9 1</specular> -->
+                <!-- </material> -->
+            <!-- </visual> -->
+			
+            <sensor name="ultrasonic" type="gpu_lidar">
+                <pose>0 0 0 0 0 0</pose>
+                <visualize>true</visualize>
+                <always_on>true</always_on>
+                <update_rate>20</update_rate>
+                <topic>ultrasonic</topic>
+                <ray>
+                    <scan>
+                        <horizontal>
+                            <samples>2</samples>
+                            <resolution>1</resolution>
+                            <min_angle>-0.01</min_angle>
+                            <max_angle>0.01</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>0.02</min>
+                        <max>2.0</max>
+                        <resolution>0.01</resolution>
+                    </range>
+                </ray>
+            </sensor>
+			
+        </link>
+
+	
+
+        <!-- CAMERA -->
+		
+        <link name="camera_front">
+		
+            <pose>0.019 0.0 0.10 0 0 0</pose>
+			
+            <!-- <visual name="camera_visual"> -->
+                <!-- <geometry> -->
+                    <!-- <box> -->
+                        <!-- <size>0.01 0.01 0.01</size> -->
+                    <!-- </box> -->
+                <!-- </geometry> -->
+                <!-- <material> -->
+                    <!-- <ambient>0.6 0.0 0.0 1</ambient> -->
+                    <!-- <diffuse>0.8 0.0 0.0 1</diffuse> -->
+                    <!-- <specular>0.9 0.9 0.9 1</specular> -->
+                <!-- </material> -->
+            <!-- </visual> -->
+			
+            <sensor name="color" type="camera">
+                <update_rate>10</update_rate>
+                <always_on>1</always_on>
+                <topic>color_image</topic>
+                <camera>
+                    <horizontal_fov>1.20427718</horizontal_fov>
+                    <image>
+                        <width>848</width>
+                        <height>480</height>
+                    </image>
+                    <clip>
+                        <near>0.01</near>
+                        <far>50</far>
+                    </clip>
+                    <lens>
+                        <intrinsics>
+                            <fx>615.9603271484375</fx>
+                            <fy>616.227294921875</fy>
+                            <cx>419.83026123046875</cx>
+                            <cy>245.1431427001953</cy>
+                            <s>0</s>
+                        </intrinsics>
+                    </lens>
+                </camera>
+            </sensor>
+			
+            <sensor name="depth" type="depth_camera">
+                <update_rate>10</update_rate>
+                <always_on>1</always_on>
+                <topic>depth_image</topic>
+                <camera>
+                    <horizontal_fov>1.51843645</horizontal_fov>
+                    <image>
+                        <width>848</width>
+                        <height>480</height>
+                        <format>R_FLOAT32</format>
+                    </image>
+                    <clip>
+                        <near>0.01</near>
+                        <far>10</far>
+                    </clip>
+                    <lens>
+                        <intrinsics>
+                            <fx>421.61578369140625</fx>
+                            <fy>421.61578369140625</fy>
+                            <cx>422.2854309082031</cx>
+                            <cy>236.57237243652344</cy>
+                            <s>0</s>
+                        </intrinsics>
+                    </lens>
+                </camera>
+            </sensor>
+			
+        </link>
+
+
+
+        <!-- Wheels -->
+		
+        <link name="wheel_left">
+            <inertial>
+                <pose>-0.01 0.105 0.028 -1.57 0 0</pose>
+                <inertia>
+                    <ixx>1.8158194e-03</ixx>
+                    <ixy>-9.3392e-12</ixy>
+                    <ixz>1.04909e-11</ixz>
+                    <iyy>3.2922126e-03</iyy>
+                    <iyz>5.75694e-11</iyz>
+                    <izz>1.8158194e-03</izz>
+                </inertia>
+                <mass>2.8498940e-02</mass>
+            </inertial>
+
+            <collision name="wheel_left_collision">
+                <pose>-0.01 0.105 0.028 -1.57 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.033</radius>
+                        <length>0.018</length>
+                    </cylinder>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>1.2</mu>
+                            <mu2>1.2</mu2>
+                            <fdir1>0 0 0</fdir1>
+                            <slip1>0</slip1>
+                            <slip2>0</slip2>
+                        </ode>
+                    </friction>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0</soft_cfm>
+                            <soft_erp>0.2</soft_erp>
+                            <kp>1e+5</kp>
+                            <kd>1</kd>
+                            <max_vel>0.01</max_vel>
+                            <min_depth>0.001</min_depth>
+                        </ode>
+                    </contact>
+                </surface>
+            </collision>
+
+            <visual name="wheel_left_visual">
+                <pose>-0.01 0.105 0.028 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>meshes/left_wheel.stl</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+                <material>
+                    <ambient>1.0 0.8 0.0 1.0</ambient>
+                    <diffuse>1.0 0.8 0.0 1.0</diffuse>
+                    <specular>0.1 0.1 0.1 1.0</specular>
+                </material>
+            </visual>
+			
+        </link>
+
+        <link name="wheel_right">
+		
+            <inertial>
+                <pose>-0.01 -0.105 0.028 -1.57 0 0</pose>
+                <inertia>
+                    <ixx>1.8158194e-03</ixx>
+                    <ixy>-9.3392e-12</ixy>
+                    <ixz>1.04909e-11</ixz>
+                    <iyy>3.2922126e-03</iyy>
+                    <iyz>5.75694e-11</iyz>
+                    <izz>1.8158194e-03</izz>
+                </inertia>
+                <mass>2.8498940e-02</mass>
+            </inertial>
+
+            <collision name="wheel_right_collision">
+                <pose>-0.01 -0.105 0.028 -1.57 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.033</radius>
+                        <length>0.018</length>
+                    </cylinder>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>1.2</mu>
+                            <mu2>1.2</mu2>
+                            <fdir1>0 0 0</fdir1>
+                            <slip1>0</slip1>
+                            <slip2>0</slip2>
+                        </ode>
+                    </friction>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0</soft_cfm>
+                            <soft_erp>0.2</soft_erp>
+                            <kp>1e+5</kp>
+                            <kd>1</kd>
+                            <max_vel>0.01</max_vel>
+                            <min_depth>0.001</min_depth>
+                        </ode>
+                    </contact>
+                </surface>
+            </collision>
+
+            <visual name="wheel_right_visual">
+                <pose>-0.01 -0.105 0.028 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>meshes/right_wheel.stl</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+                <material>
+                    <ambient>1.0 0.8 0.0 1.0</ambient>
+                    <diffuse>1.0 0.8 0.0 1.0</diffuse>
+                    <specular>0.1 0.1 0.1 1.0</specular>
+                </material>
+            </visual>
+			
+        </link>
+
+
+
+        <!-- Caster_back -->
+		
+        <link name="caster_back">
+            <pose>0 0 0.02 0 0 0</pose>
+            <inertial>
+                <mass>0.005</mass>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0.000</ixy>
+                    <ixz>0.000</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0.000</iyz>
+                    <izz>0.001</izz>
+                </inertia>
+            </inertial>
+            <visual name="visual">
+                <geometry>
+                    <box>
+                        <size>0.01 0.01 0.01</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>0.6 0.0 0.0 1</ambient>
+                    <diffuse>0.8 0.0 0.0 1</diffuse>
+                    <specular>0.9 0.9 0.9 1</specular>
+                </material>
+            </visual>
+            <collision name="collision">
+                <geometry>
+                    <sphere>
+                        <radius>0.005000</radius>
+                    </sphere>
+                </geometry>
+                <surface>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0</soft_cfm>
+                            <soft_erp>0.2</soft_erp>
+                            <kp>1e+5</kp>
+                            <kd>1</kd>
+                            <max_vel>0.01</max_vel>
+                            <min_depth>0.001</min_depth>
+                        </ode>
+                    </contact>
+                </surface>
+            </collision>
+			
+        </link>
+
+
+        <!-- Joints -->
+		
+        <joint name="base_joint" type="fixed">
+            <parent>base_footprint</parent>
+            <child>base_link</child>
+            <pose>0.0 0.0 0.010 0 0 0</pose>
+        </joint>
+
+        <joint name="wheel_left_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>wheel_left</child>
+            <pose>-0.01 0.105 0.028 -1.57 0 0</pose>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+        <joint name="wheel_right_joint" type="revolute">
+            <parent>base_link</parent>
+            <child>wheel_right</child>
+            <pose>-0.01 -0.105 0.028 -1.57 0 0</pose>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+        <joint name="caster_back_joint" type="ball">
+            <parent>base_link</parent>
+            <child>caster_back</child>
+        </joint>
+
+        <joint name="imu_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>imu</child>
+            <pose>0 0 0.1 0 0 0</pose>
+        </joint>
+
+        <joint name="lidar_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>lidar</child>
+            <pose>-0.032 0 0.171 0 0 0</pose>
+        </joint>
+
+        <joint name="ultrasonic_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>ultrasonic</child>
+			<pose>0.018 0 0.02 0 0 0</pose>
+        </joint>
+
+        <joint name="camera_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>camera_front</child>
+            <pose>0.019 0 0.110 -1.57 0 -1.57</pose>
+        </joint>
+
+
+
+        <!-- Plugins -->
+		
+        <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu"/>
+
+        <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+
+        <!-- TOPICS: /model/fossbot/odometry , /model/fossbot/tf -->
+        <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>wheel_left_joint</left_joint>
+            <right_joint>wheel_right_joint</right_joint>
+            <wheel_separation>0.210</wheel_separation>
+            <wheel_radius>0.03</wheel_radius>
+            <odom_publish_frequency>50</odom_publish_frequency>
+            <topic>cmd_vel</topic>
+
+            <!-- SPEED LIMIT -->
+            <max_linear_velocity>0.2</max_linear_velocity>
+            <max_angular_velocity>0.1</max_angular_velocity>
+
+        </plugin>
+
+
+    </model>
+</sdf>

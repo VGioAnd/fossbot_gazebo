@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>fossbot_gazebo</name>
+  <version>0.0.1</version>
+  <description>Fossbot ROS2 Gazebo simulation with SLAM, NAV2, and RTAB-Map support</description>
+  <license>MIT</license>
+  <maintainer email="andreadakisgiorgos@yahoo.com">VGioAnd</maintainer>
+
+  <!-- Core ROS2 dependencies -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>ros2cli</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+
+  <!-- Robot description & TF -->
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_tools</exec_depend>
+
+  <!-- Gazebo & Bridge -->
+  <exec_depend>ros_gz_bridge</exec_depend>
+
+  <!-- SLAM -->
+  <exec_depend>slam_toolbox</exec_depend>
+  <exec_depend>rtabmap_ros</exec_depend>
+  <exec_depend>rtabmap_viz</exec_depend>
+
+  <!-- Navigation2 -->
+  <exec_depend>navigation2</exec_depend>
+  <exec_depend>nav2_bringup</exec_depend>
+
+  <!-- Localization -->
+  <exec_depend>robot_localization</exec_depend>
+
+  <!-- Visualization & Teleop -->
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>teleop_twist_keyboard</exec_depend>
+
+  <!-- Launch -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
